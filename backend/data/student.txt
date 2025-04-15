@@ -1,0 +1,11 @@
+Name: Alex Johnson  
+Roll Number: 21CS102  
+Department: Computer Science  
+Semester: 4  
+Marks:  
+  - Data Structures: 88  
+  - Operating Systems: 81  
+  - Computer Networks: 85  
+Attendance: 92%  
+Email: alex.johnson@university.edu
+

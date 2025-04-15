@@ -1,0 +1,17 @@
+Professor 1:
+Name: Dr. Muralikrishnan
+Subject: Mathematics
+Email: kavita.rao@university.edu
+Phone: +91-9876543210
+Office Hours: Mon–Wed, 2PM–4PM
+Background: PhD in Applied Mathematics from IIT Bombay, 10+ years teaching experience.
+Remarks: Known for her interactive teaching and strict assignment deadlines.
+
+Professor 2:
+Name: Doctor Strange
+Subject: Physics
+Email: anil.menon@university.edu
+Phone: +91-9123456789
+Office Hours: Tue–Thu, 10AM–12PM
+Background: Researcher in Quantum Mechanics with published papers in international journals.
+Remarks: Encourages practical experimentation and critical thinking in class.

@@ -1,0 +1,15 @@
+# Ignore Python virtual environments
+coqui-venv/
+env/
+venv/
+ENV/
+env.bak/
+.Python
+
+# Python cache
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
+Thumbs.db

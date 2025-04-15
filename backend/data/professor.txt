@@ -1,0 +1,7 @@
+Name: Dr. Lisa Ray  
+Department: Computer Science  
+Subject: Computer Networks  
+Email: lisaray@university.edu  
+Office Hours: Mon/Wed/Fri, 10 AM - 12 PM  
+Contact: +1 555-1234
+

@@ -1,0 +1,143 @@
+import subprocess
+import threading
+import time
+import os
+import re
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
+from TTS.api import TTS
+import ollama
+from pydub import AudioSegment
+
+app = Flask(__name__)
+CORS(app)
+
+# TTS initialization
+tts = TTS(model_name="tts_models/en/jenny/jenny", progress_bar=False, gpu=True)
+
+# Output audio directory
+AUDIO_DIR = "frontend/public"
+os.makedirs(AUDIO_DIR, exist_ok=True)
+
+# TXT file paths
+STUDENT_FILE = "backend/student.txt"
+PROFESSOR_FILE = "backend/professor.txt"
+
+def read_txt_file(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            return f.read()
+    return "No data available."
+
+def clean_response(text):
+    # Remove markdown symbols like **bold**, *italic*, etc.
+    cleaned = re.sub(r"\*+", "", text)
+    cleaned = re.sub(r"[_`>#\-]+", "", cleaned)
+    cleaned = re.sub(r"\n{2,}", "\n", cleaned)
+    return cleaned.strip()
+
+def get_gemma3_response(question, student_data, professor_data):
+    prompt = f"""You are an educational assistant. Use the data below to answer concisely and clearly.
+
+Student Info:
+{student_data}
+
+Professor Info:
+{professor_data}
+
+Question:
+{question}
+
+Constraints:
+- Answer in 2-4 sentences max.
+- Keep it short, clear, and helpful.
+- Avoid markdown or formatting like * or **.
+- Use simple language anyone can understand."""
+
+    try:
+        response = ollama.chat(
+            model="gemma3:1b",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return clean_response(response['message']['content'])
+    except Exception as e:
+        print("Gemma error:", e)
+        return "I'm sorry, I couldn't find an answer at the moment."
+
+@app.route("/")
+def home():
+    return jsonify({"status": "Backend is running."})
+
+@app.route("/query", methods=["POST"])
+def handle_query():
+    data = request.get_json()
+    question = data.get("question", "").strip().lower()
+
+    student_data = read_txt_file(STUDENT_FILE)
+    professor_data = read_txt_file(PROFESSOR_FILE)
+
+    answer = get_gemma3_response(question, student_data, professor_data)
+
+    return jsonify({"answer": answer})
+
+@app.route("/speak", methods=["POST"])
+def speak():
+    try:
+        data = request.get_json()
+        text = data.get("text", "")
+        cleaned_text = clean_response(text)
+
+        max_chunk_len = 300
+        output_path = os.path.join(AUDIO_DIR, "output.wav")
+
+        if len(cleaned_text) > max_chunk_len:
+            print("⚠️ Long text, splitting for TTS...")
+            chunks = [cleaned_text[i:i+max_chunk_len] for i in range(0, len(cleaned_text), max_chunk_len)]
+            combined_audio = AudioSegment.silent(duration=0)
+            for chunk in chunks:
+                tts.tts_to_file(text=chunk, file_path="temp_chunk.wav")
+                chunk_audio = AudioSegment.from_wav("temp_chunk.wav")
+                combined_audio += chunk_audio
+            combined_audio.export(output_path, format="wav")
+            if os.path.exists("temp_chunk.wav"):
+                os.remove("temp_chunk.wav")
+        else:
+            tts.tts_to_file(text=cleaned_text, file_path=output_path)
+
+        return jsonify({"status": "ok"}), 200
+
+    except Exception as e:
+        print("TTS error:", e)
+        return jsonify({"error": "TTS processing failed"}), 500
+
+@app.route("/audio/<filename>")
+def serve_audio(filename):
+    return send_from_directory(AUDIO_DIR, filename, mimetype="audio/wav")
+
+# Optional: TTS test endpoint
+@app.route("/test", methods=["GET"])
+def test_tts():
+    try:
+        tts.tts_to_file(
+            text="This is a test. The assistant voice is working perfectly.",
+            file_path=os.path.join(AUDIO_DIR, "output.wav")
+        )
+        return jsonify({"status": "TTS test complete"}), 200
+    except Exception as e:
+        print("TTS test error:", e)
+        return jsonify({"error": "TTS test failed"}), 500
+
+def start_react_frontend():
+    try:
+        subprocess.Popen(["npm", "start"], cwd="frontend")
+    except Exception as e:
+        print("Error starting frontend:", e)
+
+def start_flask_backend():
+    app.run(debug=True, port=5000)
+
+if __name__ == "__main__":
+    threading.Thread(target=start_react_frontend).start()
+    time.sleep(5)
+    start_flask_backend()
+

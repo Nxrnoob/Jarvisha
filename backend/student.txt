@@ -1,0 +1,53 @@
+Student 1:
+Name:  Manojkumar
+Roll No: 511522105301
+Marks: Math - 92, Physics - 87, Chemistry - 85
+Attendance: 95%
+Remarks: ManojKumar is a consistent performer and actively participates in class discussions.
+
+Student 2:
+Name: Subash
+Roll No: 511522104056
+Marks: Math - 69, Physics - 96, Chemistry - 88
+Attendance: 69%
+Remarks: Subash is improving steadily and shows great interest in labs.
+
+Student 3:
+Name: Rohith
+Roll No: 511522105302
+Marks: Math - 68, Physics - 74, Chemistry - 72
+Attendance: 82%
+Remarks: Needs improvement in time management and assignment submissions.
+
+Student 4:
+Name: Pugazhenthi
+Roll No: 511522104038
+Marks: Math - 85, Physics - 88, Chemistry - 90
+Attendance: 97%
+Remarks: Pugazhenthi excels in problem solving and is a top scorer in the batch.
+
+Student 5:
+Name: Santhosh Kumar
+Roll No: 511522104044
+Marks: Math - 91, Physics - 90, Chemistry - 89
+Attendance: 94%
+Remarks: Santhosh Kumar shows excellent leadership in team projects and presentations.
+
+Student 6:
+Name: Dharshini Priya  
+Another name: DP
+Gender: Female  
+Age: 20  
+Wears Glasses: Yes  
+Class: Computer Science Engineering - 2nd Year  
+Roll Number: CSE2023045  
+Attendance: 96%  
+Marks:  
+ - Mathematics: 94  
+ - Data Structures: 92  
+ - Operating Systems: 89  
+ - Database Management: 91  
+ - AI & ML: 95  
+Performance Summary: Priya is one of the brightest students in the class. She consistently performs well in all subjects, actively participates in discussions, and is known for her problem-solving skills.  
+Additional Notes: She wears glasses and is often seen helping classmates with their doubts.
+
