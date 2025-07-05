@@ -1,1 +1,20 @@
-{}
+[
+  {
+    "name": "Dr. Muralikrishnan",
+    "subject": "Mathematics",
+    "email": "kavita.rao@university.edu",
+    "phone": "+91-9876543210",
+    "office_hours": "Mon\u2013Wed, 2PM\u20134PM",
+    "background": "PhD in Applied Mathematics from IIT Bombay, 10+ years teaching experience.",
+    "remarks": "Known for her interactive teaching and strict assignment deadlines."
+  },
+  {
+    "name": "Doctor Strange",
+    "subject": "Physics",
+    "email": "anil.menon@university.edu",
+    "phone": "+91-9123456789",
+    "office_hours": "Tue\u2013Thu, 10AM\u201312PM",
+    "background": "Researcher in Quantum Mechanics with published papers in international journals.",
+    "remarks": "Encourages practical experimentation and critical thinking in class."
+  }
+]

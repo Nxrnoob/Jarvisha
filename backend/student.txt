@@ -51,3 +51,11 @@ Marks:
 Performance Summary: Priya is one of the brightest students in the class. She consistently performs well in all subjects, actively participates in discussions, and is known for her problem-solving skills.  
 Additional Notes: She wears glasses and is often seen helping classmates with their doubts.
 
+Student 7:
+Name:  Barath Raj
+Roll No: 511522104007
+Marks: Math - 69, Physics - 83, Chemistry - 83
+Attendance: 80%
+Remarks: he is a 6ft3 boy , charming , charsmatic , bright looking student ,
+performs mediocore in academics but manages to pass all the exams without any backlogs
+rizzes up ladies staffs , late to class , likes to binge anime.

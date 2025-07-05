@@ -1,1 +1,62 @@
-{}
+[
+  {
+    "name": "Manojkumar",
+    "roll_no": "511522105301",
+    "marks": "Math - 92, Physics - 87, Chemistry - 85",
+    "attendance": "95%",
+    "remarks": "ManojKumar is a consistent performer and actively participates in class discussions."
+  },
+  {
+    "name": "Subash",
+    "roll_no": "511522104056",
+    "marks": "Math - 69, Physics - 96, Chemistry - 88",
+    "attendance": "69%",
+    "remarks": "Subash is improving steadily and shows great interest in labs."
+  },
+  {
+    "name": "Rohith",
+    "roll_no": "511522105302",
+    "marks": "Math - 68, Physics - 74, Chemistry - 72",
+    "attendance": "82%",
+    "remarks": "Needs improvement in time management and assignment submissions."
+  },
+  {
+    "name": "Pugazhenthi",
+    "roll_no": "511522104038",
+    "marks": "Math - 85, Physics - 88, Chemistry - 90",
+    "attendance": "97%",
+    "remarks": "Pugazhenthi excels in problem solving and is a top scorer in the batch."
+  },
+  {
+    "name": "Santhosh Kumar",
+    "roll_no": "511522104044",
+    "marks": "Math - 91, Physics - 90, Chemistry - 89",
+    "attendance": "94%",
+    "remarks": "Santhosh Kumar shows excellent leadership in team projects and presentations."
+  },
+  {
+    "name": "Dharshini Priya",
+    "another_name": "DP",
+    "gender": "Female",
+    "age": "20",
+    "wears_glasses": "Yes",
+    "class": "Computer Science Engineering - 2nd Year",
+    "attendance": "96%",
+    "marks": {},
+    "-_mathematics": "94",
+    "-_data_structures": "92",
+    "-_operating_systems": "89",
+    "-_database_management": "91",
+    "-_ai_&_ml": "95",
+    "additional_notes": "She wears glasses and is often seen helping classmates with their doubts.",
+    "roll_no": "CSE2023045",
+    "remarks": "Priya is one of the brightest students in the class. She consistently performs well in all subjects, actively participates in discussions, and is known for her problem-solving skills."
+  },
+  {
+    "name": "Barath Raj",
+    "roll_no": "511522104007",
+    "marks": "Math - 69, Physics - 83, Chemistry - 83",
+    "attendance": "80%",
+    "remarks": "he is a 6ft3 boy , charming , charsmatic , bright looking student , performs mediocore in academics but manages to pass all the exams without any backlogs rizzes up ladies staffs , late to class , likes to binge anime."
+  }
+]

@@ -2,7 +2,11 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import json
 import os
+import wave
+import tempfile
 from TTS.api import TTS
+from vosk import Model, KaldiRecognizer
+import base64
 
 app = Flask(__name__)
 CORS(app)
@@ -11,9 +15,18 @@ CORS(app)
 STUDENT_FILE = "backend/data/students.json"
 PROFESSOR_FILE = "backend/data/professors.json"
 AUDIO_OUTPUT = "backend/response.wav"
+VOSK_MODEL_PATH = "models/vosk-model-small-en-us-0.15"
 
 # Load Jenny TTS model
 tts = TTS(model_name="tts_models/en/jenny/jenny", progress_bar=False, gpu=False)
+
+# Load Vosk model for offline speech recognition
+try:
+    vosk_model = Model(VOSK_MODEL_PATH)
+    print("✅ Vosk model loaded successfully")
+except Exception as e:
+    print(f"❌ Error loading Vosk model: {e}")
+    vosk_model = None
 
 # Load data from JSON
 def load_data(file_path):
@@ -128,6 +141,76 @@ def handle_query():
         answer = "I'm not sure about that yet."
 
     return jsonify({"answer": answer})
+
+# 🔊 Offline Speech Recognition using Vosk
+@app.route("/recognize", methods=["POST", "OPTIONS"])
+def recognize_speech():
+    if request.method == "OPTIONS":
+        # Handle CORS preflight request
+        response = jsonify({"status": "ok"})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        response.headers.add("Access-Control-Allow-Methods", "POST")
+        return response
+    
+    print("🔊 Speech recognition request received")
+    
+    if not vosk_model:
+        print("❌ Vosk model not loaded")
+        return jsonify({"error": "Vosk model not loaded"}), 500
+    
+    try:
+        # Get audio data from request
+        data = request.get_json()
+        print(f"📦 Request data keys: {list(data.keys()) if data else 'None'}")
+        
+        audio_data = data.get("audio")
+        
+        if not audio_data:
+            print("❌ No audio data provided")
+            return jsonify({"error": "No audio data provided"}), 400
+        
+        print(f"🎵 Audio data length: {len(audio_data)}")
+        
+        # Decode base64 audio data
+        audio_bytes = base64.b64decode(audio_data.split(',')[1])
+        print(f"🔊 Decoded audio bytes: {len(audio_bytes)} bytes")
+        
+        # Create temporary WAV file
+        with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
+            temp_file.write(audio_bytes)
+            temp_file_path = temp_file.name
+        
+        print(f"💾 Temporary file created: {temp_file_path}")
+        
+        # Read WAV file
+        with wave.open(temp_file_path, 'rb') as wf:
+            print(f"🎵 WAV file: {wf.getnframes()} frames, {wf.getframerate()} Hz")
+            
+            # Create recognizer
+            rec = KaldiRecognizer(vosk_model, wf.getframerate())
+            rec.SetWords(True)
+            
+            # Process audio
+            while True:
+                data = wf.readframes(4000)
+                if len(data) == 0:
+                    break
+                rec.AcceptWaveform(data)
+            
+            # Get result
+            result = json.loads(rec.FinalResult())
+            transcript = result.get("text", "").strip()
+            print(f"📝 Transcript: '{transcript}'")
+        
+        # Clean up temporary file
+        os.unlink(temp_file_path)
+        
+        return jsonify({"transcript": transcript})
+        
+    except Exception as e:
+        print(f"❌ Error in speech recognition: {str(e)}")
+        return jsonify({"error": f"Speech recognition failed: {str(e)}"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
