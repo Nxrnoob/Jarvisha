@@ -56,7 +56,6 @@ npm install #cd frontend and run this command
 python assistant.py #run it ad root of the folder
 ```
 
-```
 
 Tech Stack 
 
