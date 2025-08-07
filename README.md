@@ -59,28 +59,28 @@ python assistant.py #run it ad root of the folder
 
 Tech Stack 
 
-    React (frontend)
+  - React (frontend)
 
-    Flask (API backend)
+  - Flask (API backend)
 
-    Gemma 3B:1 (can change model)
+  - Gemma 3B:1 (can change model)
 
-    Coqui TTS
+  - Coqui TTS
 
-    LocalStorage/JSON (for now)
+  - LocalStorage/JSON (for now)
 
-    No DB or vector store yet
+  - No DB or vector store yet
 
 Future Add-ons (if i had more time)
 
-    Real-time student marks from college DB
+  - Real-time student marks from college DB
 
-    Faculty database integration
+  - Faculty database integration
 
-    Wake-word support ("Hey Jarvisha")
+  - Wake-word support ("Hey Jarvisha")
+  
+  - Proper chat history/memory system
 
-    Proper chat history/memory system
-
-    Desktop app or system tray widget
+  - Desktop app or system tray widget
 
 Thats it.
